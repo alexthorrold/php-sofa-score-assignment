@@ -1,7 +1,5 @@
 <?php
-if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_POST["patient-firstname"])) {
-
-}
+session_start();
 ?>
 
 <!doctype html>
@@ -11,23 +9,37 @@ if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_
     <title>Input Six Subscores</title>
 </head>
 <body>
+
+<?php
+if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_POST["patient-firstname"])) {
+    $patientNHI = $_POST["patient-nhi"];
+    $patientSurname = $_POST["patient-surname"];
+    $patientFirstName = $_POST["patient-firstname"];
+    echo "<h1>$patientNHI</h1>";
+    echo "<h1>$patientSurname</h1>";
+    echo "<h1>$patientFirstName</h1>";
+    $_SESSION["patient-nhi"] = $patientNHI;
+    $_SESSION["patient-surname"] = $patientSurname;
+    $_SESSION["patient-firstname"] = $patientFirstName;
+}
+?>
+
 <form action="result.php" method="post">
     <div>
         <label for="respiratory-system">Respiratory system (PaO<sub>2</sub>):</label>
-        <input id="respiratory-system" name="respiratory-system" type="number">
+        <input id="respiratory-system" name="respiratory-system" type="number" min="0" required>
         <label for="mechanically-ventilated">Mechanically ventilated</label>
         <input id="mechanically-ventilated" name="mechanically-ventilated" type="checkbox">
     </div>
     <div>
         <label for="nervous-system">Nervous system:</label>
-        <input id="nervous-system" name="nervous-system" type="number">
+        <input id="nervous-system" name="nervous-system" type="number" min="0" required>
     </div>
     <div>
         <label for="cardiovascular-system">Cardiovascular System:</label>
-        <input id="cardiovascular-system" name="cardiovascular-system" type="number">
+        <input id="cardiovascular-system" name="cardiovascular-system" type="number" min="0" required>
         <label for="cardiovascular-option">MAP or vasopressors:</label>
         <select name="cardiovascular-option" id="cardiovascular-option">
-            <option selected disabled hidden value=""></option>
             <option value="map">MAP</option>
             <option value="dopamine">Dopamine</option>
             <option value="dobutamine">Dobutamine</option>
@@ -37,15 +49,15 @@ if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_
     </div>
     <div>
         <label for="liver">Liver:</label>
-        <input id="liver" name="liver" type="number">
+        <input id="liver" name="liver" type="number" min="0" required>
     </div>
     <div>
         <label for="coagulation">Coagulation:</label>
-        <input id="coagulation" name="coagulation" type="number">
+        <input id="coagulation" name="coagulation" type="number" min="0" required>
     </div>
     <div>
         <label for="kidneys">Kidneys:</label>
-        <input id="kidneys" name="kidneys" type="number">
+        <input id="kidneys" name="kidneys" type="number" min="0" required>
     </div>
     <button>Submit</button>
 </form>
