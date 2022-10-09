@@ -70,3 +70,24 @@ div > button {
     background-color: #4C9F70;
     border: none;
 }
+
+.flex-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.inline {
+    display: inline;
+}
+
+.results {
+}
+
+p, h3 {
+    padding: 15px;
+}
