@@ -1,7 +1,25 @@
-<?
-$session_lifetime = 3600 * 24 * 5; // 5 days
-session_set_cookie_params($session_lifetime);
-session_start();
+<?php
+function checkVariablesSet() {
+    return isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_POST["patient-firstname"]);
+}
+
+$patientNHI = "";
+$patientSurname = "";
+$patientFirstName = "";
+
+$regex = "/[A-Z]{3}[0-9]{4}/";
+
+if (checkVariablesSet()) {
+    $patientNHI = $_POST["patient-nhi"];
+    $patientSurname = $_POST["patient-surname"];
+    $patientFirstName = $_POST["patient-firstname"];
+
+    if (preg_match($regex, $patientNHI)) {
+        setcookie("patient-nhi", $patientNHI, time() + 3600 * 24 * 5);
+        setcookie("patient-surname", $patientSurname, time() + 3600 * 24 * 5);
+        setcookie("patient-firstname", $patientFirstName, time() + 3600 * 24 * 5);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,29 +31,9 @@ session_start();
 </head>
 <body>
 
-<?php
-$patientNHI = "";
-$patientSurname = "";
-$patientFirstName = "";
-
-$regex = "/[A-Z]{3}[0-9]{4}/";
-
-if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_POST["patient-firstname"])) {
-    $patientNHI = $_POST["patient-nhi"];
-    $patientSurname = $_POST["patient-surname"];
-    $patientFirstName = $_POST["patient-firstname"];
-
-    if (preg_match($regex, $patientNHI)) {
-        $_SESSION["patient-nhi"] = $patientNHI;
-        $_SESSION["patient-surname"] = $patientSurname;
-        $_SESSION["patient-firstname"] = $patientFirstName;
-    }
-}
-?>
-
 <div class="center">
     <div class="container">
-        <?php if (preg_match($regex, $patientNHI)): ?>
+        <?php if (checkVariablesSet() && preg_match($regex, $patientNHI)): ?>
             <ul>
                 <li>NHI Number: <?php echo $patientNHI ?></li>
                 <li>Patient Surname: <?php echo $patientSurname ?></li>

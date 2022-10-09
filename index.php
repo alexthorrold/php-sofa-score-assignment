@@ -1,7 +1,7 @@
 <?php
-$session_lifetime = 3600 * 24 * 5; // 5 days
-session_set_cookie_params($session_lifetime);
-session_start();
+//$session_lifetime = 3600 * 24 * 5; // 5 days
+//session_set_cookie_params($session_lifetime);
+//session_start();
 ?>
 
 <!DOCTYPE html>
@@ -18,16 +18,16 @@ $patientNHI = "";
 $patientSurname = "";
 $patientFirstName = "";
 
-if (isset($_SESSION["patient-nhi"])) {
-    $patientNHI = $_SESSION["patient-nhi"];
+if (isset($_COOKIE["patient-nhi"])) {
+    $patientNHI = $_COOKIE["patient-nhi"];
 }
 
-if (isset($_SESSION["patient-surname"])) {
-    $patientSurname = $_SESSION["patient-surname"];
+if (isset($_COOKIE["patient-surname"])) {
+    $patientSurname = $_COOKIE["patient-surname"];
 }
 
-if (isset($_SESSION["patient-firstname"])) {
-    $patientFirstName = $_SESSION["patient-firstname"];
+if (isset($_COOKIE["patient-firstname"])) {
+    $patientFirstName = $_COOKIE["patient-firstname"];
 }
 ?>
 
