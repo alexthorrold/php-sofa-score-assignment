@@ -1,8 +1,10 @@
-<?php
+<?
+$session_lifetime = 3600 * 24 * 5; // 5 days
+session_set_cookie_params($session_lifetime);
 session_start();
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,12 +17,17 @@ if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_
     $patientNHI = $_POST["patient-nhi"];
     $patientSurname = $_POST["patient-surname"];
     $patientFirstName = $_POST["patient-firstname"];
-    echo "<h1>$patientNHI</h1>";
-    echo "<h1>$patientSurname</h1>";
-    echo "<h1>$patientFirstName</h1>";
-    $_SESSION["patient-nhi"] = $patientNHI;
-    $_SESSION["patient-surname"] = $patientSurname;
-    $_SESSION["patient-firstname"] = $patientFirstName;
+
+    $regex = "/[A-Z]{3}[0-9]{4}/";
+
+    if (preg_match($regex, $patientNHI)) {
+        echo "<h1>$patientNHI</h1>";
+        echo "<h1>$patientSurname</h1>";
+        echo "<h1>$patientFirstName</h1>";
+        $_SESSION["patient-nhi"] = $patientNHI;
+        $_SESSION["patient-surname"] = $patientSurname;
+        $_SESSION["patient-firstname"] = $patientFirstName;
+    }
 }
 ?>
 
@@ -49,7 +56,7 @@ if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_
     </div>
     <div>
         <label for="liver">Liver:</label>
-        <input id="liver" name="liver" type="number" min="0" required>
+        <input id="liver" name="liver" type="number" min="0" step="0.1" required>
     </div>
     <div>
         <label for="coagulation">Coagulation:</label>
@@ -57,7 +64,7 @@ if (isset($_POST["patient-nhi"]) && isset($_POST["patient-surname"]) && isset($_
     </div>
     <div>
         <label for="kidneys">Kidneys:</label>
-        <input id="kidneys" name="kidneys" type="number" min="0" required>
+        <input id="kidneys" name="kidneys" type="number" min="0" step="0.1" required>
     </div>
     <button>Submit</button>
 </form>
