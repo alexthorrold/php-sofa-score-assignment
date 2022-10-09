@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Results</title>
+    <link rel="stylesheet" href="main.css" type="text/css">
 </head>
 <body>
 
@@ -14,11 +15,21 @@ function checkVariablesSet()
         isset($_POST["kidneys"]);
 }
 
-function checkValuesValid() {
+function checkValuesValid()
+{
     return $_POST["respiratory-system"] >= 0 && $_POST["nervous-system"] >= 0 &&
         $_POST["cardiovascular-system"] >= 0 && $_POST["liver"] >= 0 && $_POST["coagulation"] >= 0 &&
         $_POST["kidneys"] >= 0;
 }
+
+$respiratorySystem = "";
+$isMechanicallyVentilated = "";
+$nervousSystem = "";
+$cardiovascularSystem = "";
+$cardiovascularOption = "";
+$liver = "";
+$coagulation = "";
+$kidneys = "";
 
 if (checkVariablesSet() && checkValuesValid()) {
     $respiratorySystem = $_POST["respiratory-system"];
@@ -122,20 +133,26 @@ if (checkVariablesSet() && checkValuesValid()) {
         $kidneyScore = 4;
     }
 
-    echo "<h1>$respiratoryScore</h1>";
-    echo "<h1>$nervousScore</h1>";
-    echo "<h1>$cardiovascularScore</h1>";
-    echo "<h1>$liverScore</h1>";
-    echo "<h1>$coagulationScore</h1>";
-    echo "<h1>$kidneyScore</h1>";
-
     $totalScore = $respiratoryScore + $nervousScore + $cardiovascularScore + $liverScore + $coagulationScore + $kidneyScore;
-
-    echo "<h1>$totalScore</h1>";
 } else {
     echo "<h1>Error obtaining patient data, please start again</h1>";
 }
 ?>
 
+<div class="center">
+    <div class="container">
+        <?php
+        if (checkVariablesSet() && checkValuesValid()) {
+            echo "<h1>$respiratoryScore</h1>";
+            echo "<h1>$nervousScore</h1>";
+            echo "<h1>$cardiovascularScore</h1>";
+            echo "<h1>$liverScore</h1>";
+            echo "<h1>$coagulationScore</h1>";
+            echo "<h1>$kidneyScore</h1>";
+            echo "<h1>$totalScore</h1>";
+        }
+        ?>
+    </div>
+</div>
 </body>
 </html>
